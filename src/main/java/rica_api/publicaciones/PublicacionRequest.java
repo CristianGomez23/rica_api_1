@@ -1,32 +1,33 @@
-package rica_api;
+package rica_api.publicaciones;
 
-import org.springframework.data.annotation.Id;
-import org.springframework.data.mongodb.core.mapping.Document;
+import jakarta.validation.constraints.Email;
+import jakarta.validation.constraints.Max;
+import jakarta.validation.constraints.Min;
+import jakarta.validation.constraints.NotBlank;
+import jakarta.validation.constraints.NotNull;
 
 import java.util.Map;
 
-@Document(collection = "publicaciones")
-public class Publicacion {
+public class PublicacionRequest {
 
-    @Id
-    private String id;
-
+    @NotBlank(message = "El correo del investigador es obligatorio")
+    @Email(message = "El correo del investigador debe tener un formato válido")
     private String investigadorCorreo;
+
+    @NotBlank(message = "El título es obligatorio")
     private String titulo;
+
+    @NotBlank(message = "El tipo de publicación es obligatorio")
     private String tipo;
+
+    @NotNull(message = "El año es obligatorio")
+    @Min(value = 1900, message = "El año debe ser válido")
+    @Max(value = 2100, message = "El año debe ser válido")
     private Integer anio;
+
     private Map<String, String> detalles;
 
-
-    public Publicacion() {
-    }
-
-    public String getId() {
-        return id;
-    }
-
-    public void setId(String id) {
-        this.id = id;
+    public PublicacionRequest() {
     }
 
     public String getInvestigadorCorreo() {
