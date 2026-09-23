@@ -6,7 +6,12 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
 import rica_api.compartido.RecursoNoEncontradoException;
-import rica_api.investigadores.*;
+import rica_api.investigadores.aplication.InvestigadorFactory;
+import rica_api.investigadores.aplication.InvestigadorService;
+import rica_api.investigadores.aplication.RepositorioInvestigadores;
+import rica_api.investigadores.dominio.CorreoDuplicadoException;
+import rica_api.investigadores.dominio.CorreoInstitucional;
+import rica_api.investigadores.dominio.Investigador;
 
 import java.util.Optional;
 
@@ -19,7 +24,7 @@ import static org.mockito.Mockito.when;
 class InvestigadorServiceTest {
 
     @Mock
-    private InvestigadorRepository investigadorRepository;
+    private RepositorioInvestigadores repositorioInvestigadores;
 
     @InjectMocks
     private InvestigadorService investigadorService;
@@ -30,7 +35,7 @@ class InvestigadorServiceTest {
     @Test
     void buscarPorIdDevuelveElInvestigadorCuandoExiste() {
         Investigador investigador = new Investigador(1L, "Ana Torres", new CorreoInstitucional("ana.torres@uptc.edu.co"), "GIT-UPTC");
-        when(investigadorRepository.findById(1L)).thenReturn(Optional.of(investigador));
+        when(repositorioInvestigadores.buscarPorId(1L)).thenReturn(Optional.of(investigador));
 
         Investigador resultado = investigadorService.buscarPorId(1L);
 
@@ -39,7 +44,7 @@ class InvestigadorServiceTest {
 
     @Test
     void buscarPorIdLanzaExcepcionCuandoNoExiste() {
-        when(investigadorRepository.findById(99L)).thenReturn(Optional.empty());
+        when(repositorioInvestigadores.buscarPorId(99L)).thenReturn(Optional.empty());
 
         assertThatThrownBy(() -> investigadorService.buscarPorId(99L))
                 .isInstanceOf(RecursoNoEncontradoException.class)

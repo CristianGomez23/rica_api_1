@@ -30,3 +30,16 @@ Antes de tocar una línea de código, léete InvestigadorController, Investigado
 
 4. ¿Qué pasaría si alguien agrega un campo List<Publicacion> publicaciones directo en Investigador?
 - Rta: Rompería el aislamiento de las transacciones y generaría un alto acoplamiento. Por ejemplo, si dos procesos intentan registrar una nueva publicación para el mismo investigador al mismo tiempo, ocurriría un conflicto de concurrencia donde una transacción podría sobreescribir a la otra. Además, al referenciar la publicación solo por el String del correo (identidad), se mantiene la arquitectura lo suficientemente desacoplada como para poder separar ambos dominios en distintos servicios en el futuro si fuera necesario.
+---
+### Auditoría de puertos y adaptadores existentes
+1. InvestigadorRepository es una interfaz, nunca una clase concreta, desde el Tutorial 4. Según la guía (sección 3), ¿es un puerto primario o secundario? Justifica con una frase: ¿quién inicia la llamada, el núcleo o algo externo?
+- Rta: Es un puerto secundario, ya que el nucleo es quien inicia la llamada.
+
+2. InvestigadorController — ¿es un adaptador primario o secundario? ¿Qué tecnología concreta envuelve?
+- Rta: Es un adaptador primario, especificamente un controlador REST, que recibe las peticiones http y traduce la llamada al puerto.
+
+3. InvestigadorService hoy es una clase concreta, no una interfaz. InvestigadorController la llama directamente. Según la nota de la guía (sección 6, "Lo que sí falta hoy en rica-api"), ¿qué pieza falta para que exista un puerto primario explícito?
+- Falta una interfaz que formalice el puerto, delimitando lo que se promete en el caso de uso y lo que cumple InvestigadorService.
+
+4. InvestigadorFactory del Taller de la Lección 3 — ¿pertenece al núcleo o a un adaptador? Pista: revisa sus import (sección 5 de la guía, "La prueba del núcleo limpio").
+- Rta: La clase pertenece al nucleo, como una fuga controlada al tener la anotación @Component.

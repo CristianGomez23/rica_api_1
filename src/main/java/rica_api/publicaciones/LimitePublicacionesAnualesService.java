@@ -1,7 +1,7 @@
 package rica_api.publicaciones;
 
 import org.springframework.stereotype.Service;
-import rica_api.investigadores.Investigador;
+import rica_api.investigadores.dominio.Investigador;
 
 @Service
 public class LimitePublicacionesAnualesService {

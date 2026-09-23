@@ -3,9 +3,9 @@ package rica_api.publicaciones;
 import org.springframework.stereotype.Service;
 import rica_api.compartido.LimiteAnualExcedidoException;
 import rica_api.compartido.RecursoNoEncontradoException;
-import rica_api.investigadores.CorreoInstitucional;
-import rica_api.investigadores.Investigador;
-import rica_api.investigadores.InvestigadorRepository;
+import rica_api.investigadores.dominio.CorreoInstitucional;
+import rica_api.investigadores.dominio.Investigador;
+import rica_api.investigadores.infraestructura.salida.persistencia.InvestigadorRepository;
 
 import java.util.List;
 

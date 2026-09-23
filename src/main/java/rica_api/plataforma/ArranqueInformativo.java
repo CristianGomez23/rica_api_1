@@ -2,9 +2,7 @@ package rica_api.plataforma;
 
 import org.springframework.boot.CommandLineRunner;
 import org.springframework.stereotype.Component;
-import rica_api.investigadores.CorreoInstitucional;
-import rica_api.investigadores.InvestigadorRepository;
-import rica_api.publicaciones.PublicacionService;
+import rica_api.investigadores.infraestructura.salida.persistencia.InvestigadorRepository;
 
 @Component
 public class ArranqueInformativo implements CommandLineRunner{
