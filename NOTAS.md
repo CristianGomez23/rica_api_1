@@ -43,3 +43,12 @@ Antes de tocar una línea de código, léete InvestigadorController, Investigado
 
 4. InvestigadorFactory del Taller de la Lección 3 — ¿pertenece al núcleo o a un adaptador? Pista: revisa sus import (sección 5 de la guía, "La prueba del núcleo limpio").
 - Rta: La clase pertenece al nucleo, como una fuga controlada al tener la anotación @Component.
+---
+### El corte: qué va en cada servicio
+| Paquete / clase actual | Destino |
+| :--- | :--- |
+| `investigadores.*` (dominio, aplicación, infraestructura) | `investigadores-service` |
+| `publicaciones.*` | `publicaciones-service` |
+| `compartido.GlobalExceptionHandler`, `RecursoNoEncontradoException` | Se duplica en ambos — cada servicio necesita su propio manejo de errores; ya no hay un único `@ControllerAdvice` compartido |
+| `plataforma.StatusController`, `CorsConfig` | Se duplica en ambos, adaptado (cada servicio expone su propio `/api/status`) |
+| `plataforma.ArranqueInformativo`, `SaludoInstitucionalService` | Se descarta — era una demostración del Tutorial 2 (IoC/DI) sin valor de negocio real; no vale la pena mantenerlo en dos servicios |
